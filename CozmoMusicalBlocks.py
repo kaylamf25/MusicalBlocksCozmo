@@ -71,7 +71,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             else:    
                                 print("Worked")
                                 hasBlock = True   
-                                s.sendall('BlockFound')
+                                s.sendall(b'BlockFound')
                     elif instructions[1] == "2":
                         robot.say_text("In phase 2")
                         #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
@@ -105,4 +105,3 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 
                 
 cozmo.run_program(cozmo_program)
-
