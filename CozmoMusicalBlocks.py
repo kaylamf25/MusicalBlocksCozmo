@@ -54,6 +54,10 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 if len(instructions) == 2:  
                     print("Correct length")
                     print(instructions[1])
+                    if instructions[1] == "2":
+                        GameOver = True
+                    elif instructions[1] == "3":
+                        GameOver = True
                     if instructions[1] == "1":
                         hasBlock = False
                         print("1")
