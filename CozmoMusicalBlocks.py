@@ -89,6 +89,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"                        
+                elif instructions[0] == "Ready?":
+                    s.sendall(b'Ready')
                 
                 
                 
