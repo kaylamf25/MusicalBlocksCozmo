@@ -20,7 +20,7 @@ try:
     s.connect((ip, port))
 except socket_error as msg:
     print("socket failed to bind").wait_for_completed()
-cont = True  
+cont = True 
 
 roundNumber = 1
 blocksFound = 0
@@ -30,9 +30,19 @@ waitTime = random.randint(5,15)
 print(waitTime)
 time.sleep(waitTime)
 s.sendall(b'Playing;1') #start looking
+
 while roundNumber > 0:
     numOfCozmos = int(input("Enter the number of Cozmos playing: "))
     numOfBlocks = int(input("Enter the number of blocks this round: ")) 
+    readyCount = 0;
+    while(readyCount<numOfCozmos):
+        s.sendall(b'Ready?')  
+        bytedata = s.recv(4048)
+        data = bytedata.decode('utf-8')
+        print(data)
+        instructions = data.split(';')
+        if instructions[0] == 'Ready': #if a cozmo finds a block it should get into here
+            readyCount = readyCount + 1          
     print("Begin")
     waitTime = random.randint(10,45)
     startTime = random.randint(0, 211-waitTime)
@@ -64,5 +74,3 @@ while roundNumber > 0:
             blocksFound = 0; #set the amount of blocks found back to 0 for the next round
             roundNumber = roundNumber + 1
         continue
-
-
