@@ -28,7 +28,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     cont = True
     
     name = "Playing"
-    readyIsDOne = False
+    readyIsDone = False
     
     while cont:
         robot.set_lift_height(0).wait_for_completed()
