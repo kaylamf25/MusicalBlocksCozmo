@@ -68,10 +68,10 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 result = current_action.result
                                 print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
                                 cubes = None
-                                return
                             else:    
                                 print("Worked")
-                                hasBlock = True                                                
+                                hasBlock = True   
+                                s.sendall('BlockFound')
                     elif instructions[1] == "2":
                         robot.say_text("In phase 2")
                         #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
@@ -83,7 +83,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"
-                        return
                     elif instructions[1] == "3":
                         #sent if only 1 block was to be found to declare winner
                         if(hasBlock == True):
@@ -91,10 +90,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGameCozmoWinHighIntensity).wait_for_completed()                        
                             robot.say_text("Winner").wait_for_completed()
+                            return
                         else:
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
-                            name = "Out"                        
+                            name = "Out"  
+                            return
             elif ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready')
                 readyIsDone = True
@@ -104,3 +105,4 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 
                 
 cozmo.run_program(cozmo_program)
+
