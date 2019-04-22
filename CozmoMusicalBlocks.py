@@ -29,6 +29,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     
     name = "Playing"
     readyIsDone = False
+    GameOver = False
     
     while cont:
         robot.set_lift_height(0).wait_for_completed()
@@ -56,7 +57,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     if instructions[1] == "1":
                         hasBlock = False
                         print("1")
-                        while not hasBlock:
+                        while (not hasBlock) or (not GameOver):
                             print("In while loop")
                             lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                             cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)
@@ -73,6 +74,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 hasBlock = True   
                                 s.sendall(b'BlockFound')
                     elif instructions[1] == "2":
+                        GameOver = True
                         robot.say_text("In phase 2")
                         #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
                         if(hasBlock == True):
@@ -84,6 +86,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"
                     elif instructions[1] == "3":
+                        GameOver = True
+                        robot.say_text("In phase 3")
                         #sent if only 1 block was to be found to declare winner
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
