@@ -56,7 +56,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     if instructions[1] == "1":
                         hasBlock = False
                         print("1")
-                        while not GameOver:
+                        while not hasBlock:
                             print("In while loop")
                             lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                             cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)
