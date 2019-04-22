@@ -22,6 +22,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     
     try:
         s.connect((ip, port))
+        robot.say_text("Ready").wait_for_completed()
     except socket_error as msg:
         robot.say_text("socket failed to bind").wait_for_completed()
     cont = True
@@ -32,7 +33,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
         robot.set_lift_height(0).wait_for_completed()
         hasBlock = False
         cubes = None
-        cozmo.robot.Robot.start_freeplay_behaviors(robot)
+        #cozmo.robot.Robot.start_freeplay_behaviors(robot)
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
         print(str(data))
@@ -41,15 +42,18 @@ def cozmo_program(robot: cozmo.robot.Robot):
             s.close()
             quit()
         else:
-            cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-            print(data)
+            #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
+            robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')
+            robot.say_text("split data").wait_for_completed()
             if instructions[0] == name:
-                print("In name")
+                robot.say_text("my name").wait_for_completed()
+                
                 hasBlock = False
                 if len(instructions) == 2:  
                     print("Correct length")
-                    if instructions[1] == 1:
+                    print(instructions[1])
+                    if instructions[1] == "1":
                         print("1")
                         while not hasBlock:
                             print("In while loop")
@@ -67,7 +71,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             else:    
                                 print("Worked")
                                 hasBlock = True                                                
-                    elif instructions[1] == 2:
+                    elif instructions[1] == "2":
+                        robot.say_text("In phase 2")
                         #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
@@ -78,7 +83,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"
                         return
-                    elif instructions[1] == 3:
+                    elif instructions[1] == "3":
                         #sent if only 1 block was to be found to declare winner
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
@@ -89,7 +94,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"                        
-                elif instructions[0] == "Ready?":
+            elif instructions[0] == "Ready?":
                     s.sendall(b'Ready')
                 
                 
@@ -97,3 +102,4 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 
                 
 cozmo.run_program(cozmo_program)
+
