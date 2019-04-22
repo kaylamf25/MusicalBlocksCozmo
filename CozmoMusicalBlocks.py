@@ -28,6 +28,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     cont = True
     
     name = "Playing"
+    readyIsDOne = False
     
     while cont:
         robot.set_lift_height(0).wait_for_completed()
@@ -43,11 +44,11 @@ def cozmo_program(robot: cozmo.robot.Robot):
             quit()
         else:
             #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-            robot.say_text("message received").wait_for_completed()
+            #robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')
-            robot.say_text("split data").wait_for_completed()
+            #robot.say_text("split data").wait_for_completed()
             if instructions[0] == name:
-                robot.say_text("my name").wait_for_completed()
+            #    robot.say_text("my name").wait_for_completed()
                 
                 hasBlock = False
                 if len(instructions) == 2:  
@@ -94,12 +95,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
                             name = "Out"                        
-            elif instructions[0] == "Ready?":
+            elif instructions[0] == "Ready?" and not readyIsDone:
                     s.sendall(b'Ready')
+                    readyIsDone = True
                 
                 
                 
                 
                 
 cozmo.run_program(cozmo_program)
-
