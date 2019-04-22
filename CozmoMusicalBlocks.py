@@ -46,17 +46,17 @@ def cozmo_program(robot: cozmo.robot.Robot):
             #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
             #robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')
+            GameOver = False;
             #robot.say_text("split data").wait_for_completed()
             if instructions[0] == name:
-            #    robot.say_text("my name").wait_for_completed()
-                
-                hasBlock = False
+                #robot.say_text("my name").wait_for_completed()
                 if len(instructions) == 2:  
                     print("Correct length")
                     print(instructions[1])
                     if instructions[1] == "1":
+                        hasBlock = False
                         print("1")
-                        while not hasBlock:
+                        while not GameOver:
                             print("In while loop")
                             lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                             cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)
