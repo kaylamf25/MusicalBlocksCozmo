@@ -55,7 +55,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     if instructions[1] == "1":
                         hasBlock = False
                         while (not hasBlock) or (not GameOver):
-                            hasBlock = playGame()
+                            hasBlock = cozmo.run_program(playGame)
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
                             print(str(data))
@@ -99,7 +99,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 s.sendall(b'Ready')
                 readyIsDone = True
                 
-def playGame():
+def playGame(robot: cozmo.robot.Robot):
     lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
     cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=30)
     lookaround.stop()
