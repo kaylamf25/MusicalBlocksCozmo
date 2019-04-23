@@ -46,6 +46,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
         else:
             #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
             #robot.say_text("message received").wait_for_completed()
+            instructions = data.split(';')
             GameOver = False;
             #robot.say_text("split data").wait_for_completed()
             if instructions[0] == name:
