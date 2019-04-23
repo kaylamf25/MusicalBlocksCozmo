@@ -30,9 +30,9 @@ def cozmo_program(robot: cozmo.robot.Robot):
     name = "Playing"
     readyIsDone = False
     GameOver = False
+    robot.set_lift_height(0).wait_for_completed()
     
     while cont:
-        robot.set_lift_height(0).wait_for_completed()
         hasBlock = False
         cubes = None
         #cozmo.robot.Robot.start_freeplay_behaviors(robot)
@@ -52,31 +52,22 @@ def cozmo_program(robot: cozmo.robot.Robot):
             if instructions[0] == name:
                 #robot.say_text("my name").wait_for_completed()
                 if len(instructions) == 2:  
-                    print("Correct length")
-                    print(instructions[1])
-                    if instructions[1] == "2":
-                        GameOver = True
-                    elif instructions[1] == "3":
-                        GameOver = True
                     if instructions[1] == "1":
                         hasBlock = False
-                        print("1")
                         while (not hasBlock) or (not GameOver):
-                            print("In while loop")
-                            lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
-                            cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)
-                            lookaround.stop()
-                            current_action = robot.pickup_object(cubes[0], num_retries=3)
-                            current_action.wait_for_completed()
-                            if current_action.has_failed:
-                                code, reason = current_action.failure_reason
-                                result = current_action.result
-                                print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
-                                cubes = None
-                            else:    
-                                print("Worked")
-                                hasBlock = True   
-                                s.sendall(b'BlockFound')
+                            hasBlock = playGame()
+                            bytedata = s.recv(4048)
+                            data = bytedata.decode('utf-8')
+                            print(str(data))
+                            if not data:
+                                cont = False
+                                s.close()
+                                quit()
+                            else:
+                                if instructions[1] == "2":
+                                    GameOver = True
+                                elif instructions[1] == "3":
+                                    GameOver = True                                
                     elif instructions[1] == "2":
                         GameOver = True
                         robot.say_text("In phase 2")
@@ -107,6 +98,22 @@ def cozmo_program(robot: cozmo.robot.Robot):
             elif ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready')
                 readyIsDone = True
+                
+def playGame():
+    lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+    cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=30)
+    lookaround.stop()
+    current_action = robot.pickup_object(cubes[0], num_retries=2)
+    current_action.wait_for_completed()
+    if current_action.has_failed:
+        code, reason = current_action.failure_reason
+        result = current_action.result
+        print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
+        cubes = None
+        return False
+    else:    
+        s.sendall(b'BlockFound')    
+        return True
                 
                 
                 
