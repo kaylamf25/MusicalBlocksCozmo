@@ -45,13 +45,15 @@ def cozmo_program(robot: cozmo.robot.Robot):
             quit()
         else:
             #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-            #robot.say_text("message received").wait_for_completed()
+            robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')
+            robot.say_text("Split data").wait_for_completed()
             GameOver = False;
-            #robot.say_text("split data").wait_for_completed()
+            robot.say_text("Before name check").wait_for_completed()
             if instructions[0] == name:
-                #robot.say_text("my name").wait_for_completed()
-                if len(instructions) == 2:  
+                robot.say_text("my name").wait_for_completed()
+                if len(instructions) == 2: 
+                    robot.say_text("Length 2").wait_for_completed()
                     if instructions[1] == "1":
                         hasBlock = False
                         robot.say_text("Before while loop")
@@ -102,6 +104,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
             elif ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready')
                 readyIsDone = True
+                
+    
                 
 def playGame(robot: cozmo.robot.Robot):
     lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
