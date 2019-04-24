@@ -54,8 +54,11 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 if len(instructions) == 2:  
                     if instructions[1] == "1":
                         hasBlock = False
+                        robot.say_text("Before while loop")
                         while (not hasBlock) or (not GameOver):
+                            robot.say_text("In while loop")
                             hasBlock = cozmo.run_program(playGame)
+                            robot.say_text("Ran program")
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
                             print(str(data))
