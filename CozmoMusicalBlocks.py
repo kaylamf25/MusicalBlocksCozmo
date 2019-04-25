@@ -61,7 +61,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                         while (not hasBlock) or (not GameOver):
                             robot.say_text("In while loop").wait_for_completed()
                             finished = False
-                            hasBlock = cozmo.run_program(playGame)
+                            if(!cozmo.RobotBusy()):
+                                hasBlock = cozmo.run_program(playGame)
                             time.sleep(60)
                             robot.say_text("Ran program").wait_for_completed()
                             bytedata = s.recv(4048)
