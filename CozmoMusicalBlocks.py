@@ -64,16 +64,17 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                             cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=20)
                             lookaround.stop()
-                            current_action = robot.pickup_object(cubes[0], num_retries=1)
-                            current_action.wait_for_completed()
-                            if current_action.has_failed:
-                                code, reason = current_action.failure_reason
-                                result = current_action.result
-                                print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
-                                cubes = None
-                            else:    
-                                s.sendall(b'BlockFound')    
-                                hasBlock = True
+                            if cubes[0] == not None:
+                                current_action = robot.pickup_object(cubes[0], num_retries=1)
+                                current_action.wait_for_completed()
+                                if current_action.has_failed:
+                                    code, reason = current_action.failure_reason
+                                    result = current_action.result
+                                    print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
+                                    cubes = None
+                                else:    
+                                    s.sendall(b'BlockFound')    
+                                    hasBlock = True
                             #robot.say_text("Ran program").wait_for_completed()
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
