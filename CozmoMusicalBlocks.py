@@ -31,7 +31,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     readyIsDone = False
     GameOver = False
     robot.set_lift_height(0).wait_for_completed()
-    robot.set_head_angle(0).wait_for_completed()
+    robot.set_head_angle(degrees(0)).wait_for_completed()
     
     while cont:
         hasBlock = False
