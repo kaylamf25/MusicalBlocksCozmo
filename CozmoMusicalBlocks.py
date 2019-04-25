@@ -107,12 +107,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
                             robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
-                            robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGameCozmoWinHighIntensity).wait_for_completed()                        
+                            robot.play_anim_trigger(cozmo.anim.Triggers.anim_keepaway_wingame_02).wait_for_completed()                        
                             robot.say_text("Winner").wait_for_completed()
                             return
                         else:
                             robot.set_lift_height(0).wait_for_completed()                            
-                            robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
+                            robot.play_anim_trigger(cozmo.anim.Triggers.anim_keepaway_losegame_02).wait_for_completed()
                             name = "Out"  
                             return
             elif ((instructions[0] == "Ready?") and (not readyIsDone)):
