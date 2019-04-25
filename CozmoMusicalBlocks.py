@@ -80,10 +80,11 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             print(str(data))
                             if data:
                                 instructions = data.split(';')
-                                if instructions[1] == "2":
-                                    GameOver = True
-                                elif instructions[1] == "3":
-                                    GameOver = True                                                                
+                                if(len(instructions) == 2):
+                                    if instructions[1] == "2":
+                                        GameOver = True
+                                    elif instructions[1] == "3":
+                                        GameOver = True                                                                
                     elif instructions[1] == "2":
                         GameOver = True
                         robot.say_text("In phase 2").wait_for_completed()
