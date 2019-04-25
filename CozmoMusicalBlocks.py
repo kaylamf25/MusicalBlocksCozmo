@@ -30,12 +30,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
     name = "Playing"
     readyIsDone = False
     GameOver = False
+    hasBlock = False
+    cubes = None    
     robot.set_lift_height(0).wait_for_completed()
     robot.set_head_angle(degrees(0)).wait_for_completed()
     
     while cont:
-        hasBlock = False
-        cubes = None
         #cozmo.robot.Robot.start_freeplay_behaviors(robot)
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
