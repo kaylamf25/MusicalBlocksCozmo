@@ -57,7 +57,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     #robot.say_text("Length 2").wait_for_completed()
                     if instructions[1] == "1":
                         #robot.say_text("Before has block").wait_for_completed()
-                        hasBlock = False
                         #robot.say_text("Before while loop").wait_for_completed()
                         while (not hasBlock) and (not GameOver):
                             #robot.say_text("In while loop").wait_for_completed()
