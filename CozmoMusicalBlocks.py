@@ -45,11 +45,11 @@ def cozmo_program(robot: cozmo.robot.Robot):
             quit()
         else:
             #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-            robot.say_text("message received").wait_for_completed()
+            #robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')
-            robot.say_text("Split data").wait_for_completed()
+            #robot.say_text("Split data").wait_for_completed()
             GameOver = False;
-            robot.say_text("Before name check").wait_for_completed()
+            #robot.say_text("Before name check").wait_for_completed()
             if instructions[0] == name:
                 robot.say_text("my name").wait_for_completed()
                 if len(instructions) == 2: 
@@ -109,6 +109,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     
                 
 def playGame(robot: cozmo.robot.Robot):
+    robot.say_text("In play game").wait_for_completed()
     lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
     cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=30)
     lookaround.stop()
