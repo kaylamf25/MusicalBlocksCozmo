@@ -55,13 +55,13 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 if len(instructions) == 2: 
                     robot.say_text("Length 2").wait_for_completed()
                     if instructions[1] == "1":
-                        robot.say_text("Before has block")
+                        robot.say_text("Before has block").wait_for_completed()
                         hasBlock = False
-                        robot.say_text("Before while loop")
+                        robot.say_text("Before while loop").wait_for_completed()
                         while (not hasBlock) or (not GameOver):
-                            robot.say_text("In while loop")
+                            robot.say_text("In while loop").wait_for_completed()
                             hasBlock = cozmo.run_program(playGame)
-                            robot.say_text("Ran program")
+                            robot.say_text("Ran program").wait_for_completed()
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
                             print(str(data))
@@ -77,7 +77,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                     GameOver = True                                
                     elif instructions[1] == "2":
                         GameOver = True
-                        robot.say_text("In phase 2")
+                        robot.say_text("In phase 2").wait_for_completed()
                         #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
@@ -89,7 +89,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             name = "Out"
                     elif instructions[1] == "3":
                         GameOver = True
-                        robot.say_text("In phase 3")
+                        robot.say_text("In phase 3").wait_for_completed()
                         #sent if only 1 block was to be found to declare winner
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
