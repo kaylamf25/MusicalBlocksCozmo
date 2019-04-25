@@ -51,19 +51,16 @@ def cozmo_program(robot: cozmo.robot.Robot):
             GameOver = False;
             #robot.say_text("Before name check").wait_for_completed()
             if instructions[0] == name:
-                robot.say_text("my name").wait_for_completed()
+                #robot.say_text("my name").wait_for_completed()
                 if len(instructions) == 2: 
-                    robot.say_text("Length 2").wait_for_completed()
+                    #robot.say_text("Length 2").wait_for_completed()
                     if instructions[1] == "1":
-                        robot.say_text("Before has block").wait_for_completed()
+                        #robot.say_text("Before has block").wait_for_completed()
                         hasBlock = False
                         robot.say_text("Before while loop").wait_for_completed()
                         while (not hasBlock) or (not GameOver):
                             robot.say_text("In while loop").wait_for_completed()
-                            finished = False
-                            cozmo.RobotBusy(time.sleep(10))
                             hasBlock = cozmo.run_program(playGame)
-                            time.sleep(60)
                             robot.say_text("Ran program").wait_for_completed()
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
