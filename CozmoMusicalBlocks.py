@@ -57,14 +57,13 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     if instructions[1] == "1":
                         #robot.say_text("Before has block").wait_for_completed()
                         hasBlock = False
-                        robot.say_text("Before while loop").wait_for_completed()
-                        while (not hasBlock) or (not GameOver):
-                            robot.say_text("In while loop").wait_for_completed()
-                            robot.say_text("In play game").wait_for_completed()
+                        #robot.say_text("Before while loop").wait_for_completed()
+                        while (not hasBlock) and (not GameOver):
+                            #robot.say_text("In while loop").wait_for_completed()
                             lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
-                            cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=30)
+                            cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=20)
                             lookaround.stop()
-                            current_action = robot.pickup_object(cubes[0], num_retries=2)
+                            current_action = robot.pickup_object(cubes[0], num_retries=1)
                             current_action.wait_for_completed()
                             if current_action.has_failed:
                                 code, reason = current_action.failure_reason
@@ -74,20 +73,16 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             else:    
                                 s.sendall(b'BlockFound')    
                                 hasBlock = True
-                            robot.say_text("Ran program").wait_for_completed()
+                            #robot.say_text("Ran program").wait_for_completed()
                             bytedata = s.recv(4048)
                             data = bytedata.decode('utf-8')
                             print(str(data))
-                            if not data:
-                                cont = False
-                                s.close()
-                                quit()
-                            else:
+                            if data:
                                 instructions = data.split(';')
                                 if instructions[1] == "2":
                                     GameOver = True
                                 elif instructions[1] == "3":
-                                    GameOver = True                                
+                                    GameOver = True                                                                
                     elif instructions[1] == "2":
                         GameOver = True
                         robot.say_text("In phase 2").wait_for_completed()
