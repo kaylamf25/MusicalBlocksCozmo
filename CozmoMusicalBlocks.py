@@ -20,7 +20,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
         robot.say_text("socket failed" + msg).wait_for_completed()
     ip = "10.0.1.10"
     port = 5000
-    
     try:
         s.connect((ip, port))
         robot.say_text("Ready").wait_for_completed()
@@ -114,4 +113,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     robot.set_lift_height(0).wait_for_completed()                            
                     robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                     name = "Out"
-                    return                
+                    return    
+                
+cozmo.run_program(cozmo_program)
