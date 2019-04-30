@@ -71,7 +71,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                                 cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=10)
                                 lookaround.stop()
-                                if (not(cubes == None)):
+                                if (not(cubes == None)) or len(cubes) ==0:
                                     current_action = robot.pickup_object(cubes[0], num_retries=1)
                                     current_action.wait_for_completed()
                                     if current_action.has_failed:
