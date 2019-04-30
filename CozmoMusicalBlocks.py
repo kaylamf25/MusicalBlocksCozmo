@@ -67,6 +67,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
             #elif Music start
             elif instructions[0] == "Music":
                 #do dance for length
+                continue
 
             #elif Look for a block
             elif instructions[0] == "Look" and not hasBlock:
