@@ -101,29 +101,33 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                         if(len(instructions) == 2):
                                             if instructions[1] == "2":
                                                 GameOver = True
-                                                robot.say_text("In phase 2").wait_for_completed()
-                                                #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
-                                                if(hasBlock == True):
-                                                    robot.set_lift_height(0).wait_for_completed()
-                                                    robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
-                                                    robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()    
-                                                    hasBlock = False
-                                                else:
-                                                    robot.set_lift_height(0).wait_for_completed()                            
-                                                    robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
-                                                    name = "Out"
-                                                    return
                                             elif instructions[1] == "3":
                                                 GameOver = True                                                                
-                                                robot.say_text("In phase 3").wait_for_completed()
-                                                #sent if only 1 block was to be found to declare winner
-                                                if(hasBlock == True):
-                                                    robot.set_lift_height(0).wait_for_completed()
-                                                    robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
-                                                    robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()                            
-                                                    robot.say_text("Winner").wait_for_completed()
-                                                    hasBlock = False;
-                                                    return
+                        elif instructions[1] == "2":
+                            GameOver = True
+                            robot.say_text("In phase 2").wait_for_completed()
+                            #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
+                            if(hasBlock == True):
+                                robot.set_lift_height(0).wait_for_completed()
+                                robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
+                                robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()
+                                hasBlock = False
+                            else:
+                                robot.set_lift_height(0).wait_for_completed()                            
+                                robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
+                                name = "Out"
+                                return
+                        elif instructions[1] == "3":
+                            GameOver = True
+                            robot.say_text("In phase 3").wait_for_completed()
+                            #sent if only 1 block was to be found to declare winner
+                            if(hasBlock == True):
+                                robot.set_lift_height(0).wait_for_completed()
+                                robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
+                                robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()                        
+                                robot.say_text("Winner").wait_for_completed()
+                                hasBlock = False;
+                                return
                             else:
                                 robot.set_lift_height(0).wait_for_completed()                            
                                 robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
