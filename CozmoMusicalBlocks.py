@@ -76,7 +76,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=10)
                 lookaround.stop()
                 if (not(cubes == None)) or len(cubes) ==0:
-                    current_action = robot.pickup_object(cubes[0], num_retries=4)
+                    current_action = robot.pickup_object(cubes[0], num_retries=2)
                     current_action.wait_for_completed()
                     if current_action.has_failed:
                         code, reason = current_action.failure_reason
@@ -114,5 +114,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                     name = "Out"
                     return    
+                
+            elif instructions[0] == "Listening?":
+                s.sendall("Listening")
                 
 cozmo.run_program(cozmo_program)
