@@ -116,6 +116,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     return    
                 
             elif instructions[0] == "Listening?":
-                s.sendall("Listening")
+                s.sendall(b"Listening")
                 
 cozmo.run_program(cozmo_program)
