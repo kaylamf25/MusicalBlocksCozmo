@@ -93,6 +93,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.set_lift_height(0).wait_for_completed()
                             robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
                             robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()
+                            hasBlock = False
                         else:
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
@@ -106,11 +107,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
                             robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
                             robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()                        
                             robot.say_text("Winner").wait_for_completed()
+                            hasBlock = False;
                             return
                         else:
                             robot.set_lift_height(0).wait_for_completed()                            
                             robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
-                            name = "Out"  
+                            name = "Out"
                             return
             elif ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready')
