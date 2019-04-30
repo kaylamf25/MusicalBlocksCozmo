@@ -92,10 +92,10 @@ def cozmo_program(robot: cozmo.robot.Robot):
                         if(hasBlock == True):
                             robot.set_lift_height(0).wait_for_completed()
                             robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
-                            robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGameCozmoWinHighIntensity).wait_for_completed()
+                            robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()
                         else:
                             robot.set_lift_height(0).wait_for_completed()                            
-                            robot.play_anim_trigger(cozmo.anim.Triggers.OnSpeedtapGamePlayerWinHighIntensity).wait_for_completed()
+                            robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                             name = "Out"
                     elif instructions[1] == "3":
                         GameOver = True
