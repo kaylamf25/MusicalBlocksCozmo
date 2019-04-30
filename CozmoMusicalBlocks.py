@@ -71,7 +71,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                                 cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=10)
                                 lookaround.stop()
-                                if not(cubes == None):
+                                if (not(cubes == None)):
                                     current_action = robot.pickup_object(cubes[0], num_retries=1)
                                     current_action.wait_for_completed()
                                     if current_action.has_failed:
@@ -99,8 +99,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                             elif instructions[3] == "3":
                                                 GameOver = True 
                                                 instructions = ['Playing', '3']
-                        elif instructions[1] == "2":
-                            GameOver = True
+                        elif (instructions[1] == "2") and GameOver:
                             robot.say_text("In phase 2").wait_for_completed()
                             #triggers cozmo to celebrate if they have a block or get sad if he doesn't have one
                             if(hasBlock == True):
@@ -113,8 +112,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                                 name = "Out"
                                 return
-                        elif instructions[1] == "3":
-                            GameOver = True
+                        elif instructions[1] == "3" and GameOver:
                             robot.say_text("In phase 3").wait_for_completed()
                             #sent if only 1 block was to be found to declare winner
                             if(hasBlock == True):
