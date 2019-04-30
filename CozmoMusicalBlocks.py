@@ -41,8 +41,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
             s.close()
             quit()
         else:
-            #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-            #robot.say_text("message received").wait_for_completed()
             instructions = data.split(';')    
             if ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready') 
@@ -64,20 +62,12 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 quit()
             else:
                 #cozmo.robot.Robot.stop_freeplay_behaviors(robot)
-                #robot.say_text("message received").wait_for_completed()
                 instructions = data.split(';')
-                #robot.say_text("Split data").wait_for_completed()
                 GameOver = False;   
-                #robot.say_text("Before name check").wait_for_completed()
                 if instructions[0] == name:
-                    #robot.say_text("my name").wait_for_completed()
                     if len(instructions) == 2: 
-                        #robot.say_text("Length 2").wait_for_completed()
                         if instructions[1] == "1":
-                            #robot.say_text("Before has block").wait_for_completed()
-                            #robot.say_text("Before while loop").wait_for_completed()
                             while (not hasBlock) and (not GameOver):
-                                #robot.say_text("In while loop").wait_for_completed()
                                 lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
                                 cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=10)
                                 lookaround.stop()
@@ -92,7 +82,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                     else:    
                                         s.sendall(b'BlockFound')    
                                         hasBlock = True
-                                    #robot.say_text("Ran program").wait_for_completed()
                                     bytedata = s.recv(4048)
                                     data = bytedata.decode('utf-8')
                                     print(str(data))
@@ -102,7 +91,14 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                             if instructions[1] == "2":
                                                 GameOver = True
                                             elif instructions[1] == "3":
-                                                GameOver = True                                                                
+                                                GameOver = True   
+                                        elif(len(instructions) ==4):
+                                            if instructions[3] == "2":
+                                                GameOver = True
+                                                instructions = ['Playing', '2']
+                                            elif instructions[3] == "3":
+                                                GameOver = True 
+                                                instructions = ['Playing', '3']
                         elif instructions[1] == "2":
                             GameOver = True
                             robot.say_text("In phase 2").wait_for_completed()
