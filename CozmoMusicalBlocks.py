@@ -132,7 +132,9 @@ def cozmo_program(robot: cozmo.robot.Robot):
                                 robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                                 name = "Out"
                                 return
-            
+                elif ((instructions[0] == "Ready?") and (not readyIsDone)):
+                    s.sendall(b'Ready') 
+                    readyIsDone = True            
                 
     
                 
