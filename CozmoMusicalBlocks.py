@@ -45,9 +45,10 @@ def cozmo_program(robot: cozmo.robot.Robot):
         instructions = data.split(';')    
         if ((instructions[0] == "Ready?") and (not readyIsDone)):
             s.sendall(b'Ready') 
+            robot.say_text("First Ready")
             readyIsDone = True            
     
-    
+    listenNotDone = True;
     while cont:
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
@@ -62,14 +63,15 @@ def cozmo_program(robot: cozmo.robot.Robot):
             #if Ready to play
             if ((instructions[0] == "Ready?") and (not readyIsDone)):
                 s.sendall(b'Ready') 
+                robot.say_text("Second Ready")
                 readyIsDone = True         
             #elif Music start
             elif instructions[0] == "Music":
+                listenNotDone = True
                 while not (instructions[0]=="Stop"):
-                    robot.turn_in_place(degrees(360)).wait_for_completed()
-                    bytedata = s.recv(4048)
-                    data = bytedata.decode('utf-8')  
+                    robot.turn_in_place(degrees(360)).wait_for_completed()  
                     instructions = data.split(';')
+                   
 
             #elif Look for a block
             elif instructions[0] == "Look" and not hasBlock:
@@ -118,7 +120,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     name = "Out"
                     return    
                 
-            elif instructions[0] == "Listening?":
+            elif instructions[0] == "Listening?" and listenNotDone:
                 s.sendall(b"Listening")
+                listenNotDone = False;
                 
 cozmo.run_program(cozmo_program)
