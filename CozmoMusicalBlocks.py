@@ -63,8 +63,11 @@ def cozmo_program(robot: cozmo.robot.Robot):
             #elif Music start
             if instructions[0] == "Music":
                 listenNotDone = True
-                #while not (instructions[0]=="Stop"):
-                robot.turn_in_place(degrees(360),num_retries=instructions[1]).wait_for_completed()  
+                bytedata = s.recv(4048)
+                data = bytedata.decode('utf-8')
+                print(str(data))   
+                instructions = data.split(';')
+                robot.turn_in_place(degrees(360),num_retries=instructions[0]).wait_for_completed()  
                    
 
             #elif Look for a block
