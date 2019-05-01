@@ -66,7 +66,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
             #elif Music start
             elif instructions[0] == "Music":
                 while not (instructions[0]=="Stop"):
-                    robot.turn_in_place(360)
+                    robot.turn_in_place(degrees(360))
 
             #elif Look for a block
             elif instructions[0] == "Look" and not hasBlock:
