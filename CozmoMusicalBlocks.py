@@ -45,7 +45,6 @@ def cozmo_program(robot: cozmo.robot.Robot):
         instructions = data.split(';')    
         if ((instructions[0] == "Ready?") and (not readyIsDone)):
             s.sendall(b'Ready') 
-            robot.say_text("First Ready").wait_for_completed()
             readyIsDone = True            
     
     listenNotDone = True;
@@ -60,13 +59,9 @@ def cozmo_program(robot: cozmo.robot.Robot):
         else:        
             #parse message
             instructions = data.split(';')
-            #if Ready to play
-            if ((instructions[0] == "Ready?") and (not readyIsDone)):
-                s.sendall(b'Ready')
-                robot.say_text("Second Ready").wait_for_completed()
-                readyIsDone = True         
+                    
             #elif Music start
-            elif instructions[0] == "Music":
+            if instructions[0] == "Music":
                 listenNotDone = True
                 while not (instructions[0]=="Stop"):
                     robot.turn_in_place(degrees(360)).wait_for_completed()  
