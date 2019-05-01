@@ -65,8 +65,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 readyIsDone = True         
             #elif Music start
             elif instructions[0] == "Music":
-                #do dance for length
-                continue
+                while not (instructions[0]=="Stop"):
+                    robot.turn_in_place(360)
 
             #elif Look for a block
             elif instructions[0] == "Look" and not hasBlock:
