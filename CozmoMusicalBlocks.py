@@ -67,6 +67,9 @@ def cozmo_program(robot: cozmo.robot.Robot):
             elif instructions[0] == "Music":
                 while not (instructions[0]=="Stop"):
                     robot.turn_in_place(degrees(360)).wait_for_completed()
+                    bytedata = s.recv(4048)
+                    data = bytedata.decode('utf-8')  
+                    instructions = data.split(';')
 
             #elif Look for a block
             elif instructions[0] == "Look" and not hasBlock:
