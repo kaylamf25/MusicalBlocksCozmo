@@ -31,7 +31,7 @@ while roundNumber > 0:
     numOfBlocks = int(input("Enter the number of blocks this round: ")) 
     readyCount = 0;
     while readyCount<numOfCozmos and (roundNumber == 1):
-        s.sendall('Ready?')  
+        s.sendall(b'Ready?')  
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
         print(data)
@@ -47,18 +47,19 @@ while roundNumber > 0:
     print("Start time: ",startTime)
     pygame.mixer.init()
     pygame.mixer.music.load('The_Hampster_Dance.mp3') #211 seconds long
-    s.sendall('Music')
+    s.sendall(b'Music')
     time.sleep(1)
     waitTimeString = str(waitTime)
-    s.sendall(waitTimeString)
+    b= bytes(waitTimeString,'utf-8')
+    s.sendall(b)
     #s.sendall(str.encode(waitTime))
     #s.sendall(b"" + str(waitTime) + b"")
     #s.send(str.encode(waitTime))
     pygame.mixer_music.play(start=startTime)
     time.sleep(waitTime)
-    s.sendall('Stop')
+    s.sendall(b'Stop')
     time.sleep(1)
-    s.sendall('Look') #start looking
+    s.sendall(b'Look') #start looking
     pygame.mixer_music.stop()
     
     while (not(blocksFound==numOfBlocks)):
@@ -71,11 +72,11 @@ while roundNumber > 0:
                 blocksFound = blocksFound + 1            
             else:
                 listen = True
-                s.sendall('Look')
+                s.sendall(b'Look')
         
     listenCount = 0
     while listenCount<numOfCozmos:
-        s.sendall('Listening?')  
+        s.sendall(b'Listening?')  
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
         print(data)
@@ -88,11 +89,11 @@ while roundNumber > 0:
     listenCount = 0
     if(numOfBlocks == 1):
         time.sleep(1)
-        s.sendall('GameOver')
+        s.sendall(b'GameOver')
         roundNumber = 0    
         blocksFound = 0
     else:
         time.sleep(1)
-        s.sendall('RoundOver') #post game celebration or sad and name change3  
+        s.sendall(b'RoundOver') #post game celebration or sad and name change3  
         blocksFound = 0 #set the amount of blocks found back to 0 for the next round
         roundNumber = roundNumber + 1
