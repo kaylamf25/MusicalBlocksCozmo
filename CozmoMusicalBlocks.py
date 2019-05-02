@@ -1,4 +1,5 @@
 import cozmo
+import tkinter
 import socket
 import errno
 import time
