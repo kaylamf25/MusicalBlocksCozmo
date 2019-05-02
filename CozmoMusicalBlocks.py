@@ -67,7 +67,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 data = bytedata.decode('utf-8')
                 print(str(data))   
                 instructions = data.split(';')
-                robot.turn_in_place(degrees(3600)).wait_for_completed()  
+                temp = (int)(instructions[0])
+                robot.turn_in_place(degrees(temp*720)).wait_for_completed()  
                    
 
             #elif Look for a block
