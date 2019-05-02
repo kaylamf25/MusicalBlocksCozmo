@@ -30,10 +30,8 @@ while roundNumber > 0:
     numOfCozmos = int(input("Enter the number of Cozmos playing: "))
     numOfBlocks = int(input("Enter the number of blocks this round: ")) 
     readyCount = 0;
-    print('1st stop')
     while readyCount<numOfCozmos and (roundNumber == 1):
-        print('in while')
-        s.sendall(b'Ready?')  
+        s.sendall('Ready?')  
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
         print(data)
@@ -49,10 +47,18 @@ while roundNumber > 0:
     print("Start time: ",startTime)
     pygame.mixer.init()
     pygame.mixer.music.load('The_Hampster_Dance.mp3') #211 seconds long
-    s.sendall(b'Music')
+    s.sendall('Music')
+    time.sleep(1)
+    waitTimeString = str(waitTime)
+    s.sendall(waitTimeString)
+    #s.sendall(str.encode(waitTime))
+    #s.sendall(b"" + str(waitTime) + b"")
+    #s.send(str.encode(waitTime))
     pygame.mixer_music.play(start=startTime)
     time.sleep(waitTime)
-    s.sendall(b'Look') #start looking
+    s.sendall('Stop')
+    time.sleep(1)
+    s.sendall('Look') #start looking
     pygame.mixer_music.stop()
     
     while (not(blocksFound==numOfBlocks)):
@@ -65,11 +71,11 @@ while roundNumber > 0:
                 blocksFound = blocksFound + 1            
             else:
                 listen = True
-                s.sendall(b'Look')
+                s.sendall('Look')
         
     listenCount = 0
     while listenCount<numOfCozmos:
-        s.sendall(b'Listening?')  
+        s.sendall('Listening?')  
         bytedata = s.recv(4048)
         data = bytedata.decode('utf-8')
         print(data)
@@ -82,11 +88,11 @@ while roundNumber > 0:
     listenCount = 0
     if(numOfBlocks == 1):
         time.sleep(1)
-        s.sendall(b'GameOver')
+        s.sendall('GameOver')
         roundNumber = 0    
         blocksFound = 0
     else:
         time.sleep(1)
-        s.sendall(b'RoundOver') #post game celebration or sad and name change3  
+        s.sendall('RoundOver') #post game celebration or sad and name change3  
         blocksFound = 0 #set the amount of blocks found back to 0 for the next round
         roundNumber = roundNumber + 1
