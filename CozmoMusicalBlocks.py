@@ -68,7 +68,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 print(str(data))   
                 instructions = data.split(';')
                 temp = int(instructions[0])
-                temp = temp*720
+                temp = temp*540
                 robot.turn_in_place(degrees(temp)).wait_for_completed()  
                    
 
