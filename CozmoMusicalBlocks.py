@@ -4,6 +4,8 @@ import socket
 import errno
 import time
 import random
+import numpy
+import PIL
 import pygame
 from socket import error as socket_error
 import asyncio
