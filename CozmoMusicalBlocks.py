@@ -119,11 +119,13 @@ def cozmo_program(robot: cozmo.robot.Robot):
                     robot.drive_straight(cozmo.util.distance_mm(-100), cozmo.util.speed_mmps(100)).wait_for_completed()                            
                     robot.play_anim('anim_keepaway_wingame_02').wait_for_completed()
                     hasBlock = False
+                    robot.say_text("Moving on")
                 else:
                     robot.set_lift_height(0).wait_for_completed() 
                     robot.set_head_angle(degrees(0)).wait_for_completed()
                     robot.play_anim('anim_keepaway_losegame_02').wait_for_completed()
                     name = "Out"
+                    robot.say_text("I'm out")
                     return    
                 
             #A way to make sure they're all listening for commands before sending them
@@ -131,4 +133,4 @@ def cozmo_program(robot: cozmo.robot.Robot):
                 s.sendall(b"Listening")
                 listenNotDone = False;
                 
-cozmo.run_program(cozmo_program)
+cozmo.run_program(cozmo_program,use_viewer=True,force_viewer_on_top=True)
