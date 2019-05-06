@@ -82,7 +82,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
             elif instructions[0] == "Look" and not hasBlock:
                 cubes = None
                 lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
-                cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=20)
+                cubes = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=10)
                 lookaround.stop()
                 if (not(len(cubes) ==0)): #if there is a cube try to pick it up
                     current_action = robot.pickup_object(cubes[0], num_retries=1)
