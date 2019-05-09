@@ -1,0 +1,93 @@
+Kayla Felderman 
+Topics in CS1 
+Professor Szecsei 
+Musical Blocks 
+Original Project Pitch Summary: 
+ In my musical blocks project, multiple Cozmo’s will look around for a block to pick up. Since there will be less blocks
+ around than there are Cozmo robots, some of them will find blocks and some will not. Those that do find blocks will win 
+ and should celebrate accordingly. My original, baseline goals are to have the Cozmo’s roam around in a confined area 
+ before being triggered through networking to begin play and after the round (when all the blocks have been found), have 
+ those that found a block celebrate and those that didn’t get sad. 
+ 
+Project Development: 
+When starting this project, I made sure to begin by laying out the idea of how I would implement my project. I decided on 
+making two different codes, one for the master to run the game without a Cozmo and another for all of the computers 
+controlling a Cozmo. These codes were to connect via networking. At first, I tried to make the code as good as possible 
+without involving the network. I ran into one big problem during this timeframe that cost me a lot of time. I was attempting 
+to keep Cozmo moving around in a confined area but couldn’t find a way to do so. I tried using the memory map as well as 
+creating bounds and checking Cozmos position. This is a problem I never truly got past and ended up having to give mostly 
+up on. Now, the Cozmos just spin in place instead. During this timeframe I also had a couple successes. I was able to get 
+music to play through pygame and start it at a randomized time, as well as have it run for a randomized time that comes from 
+an interval you can specify. Once I begun using the network, I started with just trying to get one Cozmo to do the correct 
+activity. Then once I felt that was enough to move on I opened it up to two Cozmos which was much more difficult because the 
+Cozmos don’t always play nicely together. During the debugging process with 1 or 2 Cozmos I had many successes and failures. 
+Most of the failures came because of my lack of understanding with how the network works as well as trying to patch up 
+specific problems rather than wholistic fixes to improve the code. This led me down a path that eventually made it hard to 
+troubleshoot problems inevitably giving me less control over my code. While I originally was very stressed out about Denise’s 
+suggestion of making new code starting from scratch by working through the logic of my code with comments, then adding in my 
+old code in chunks, it ended up being very beneficial to solving problems with my network communication and getting rid of 
+useless variables and loops. This helped fix my problem of them not always continuing to look for a block until they are found 
+as well as celebrating appropriately if they have a block or not when the game is over. Now that this logic is fixed I am 
+continuing to work on more than 2 Cozmos to have multiple rounds and multiple blocks. This has been tested very few times and 
+runs okay, but I have yet to master it. Another problem I am having with the Cozmos that I can’t fix without human intervention 
+as far as I’m aware is when the Cozmos take a block that has already been found. My fix to that is to take the blocks away 
+once it has been picked up. Lastly, I am still unsure if having others on the network will greatly affect my code, so this is 
+one possible fatal flaw to my design. Overall, I am very happy with how my project has ended up. Through the countless hours 
+and challenges that went into this project I have learned a lot about python, installments of software, networking, and the 
+real world struggles of linking software to the hardware that runs it.  
+Set Up Instructions: 
+ Connecting to the Network: 
+-Go to the Cozmo network and enter in the correct password (if you are using a different network you will need to 
+  enter in that IP address and port number into the code) 
+-In the case you need to force send a message in the network or want to see what is being sent in the network… 
+ 1. Open the command prompt 
+ 2. type “python” then hit enter 
+ 3. type “import socket” then hit enter 
+ 4. type “s = socket.socket()” then hit enter 
+ 5. type “s.connect((“10.0.1.10”,5000))” then hit enter 
+ 6. Then to receive the messages type “s.recv(4048)” then hit enter or to send a message type “s.sendall(b’YourMessage’)” 
+  then hit enter 
+ 
+ Need to have git downloaded and installed to clone the repository 
+  -To clone the repository: 
+1. Copy the cloneable link from this github https://github.com/kaylamf25/MusicalBlocksCozmo 
+2. Open the command prompt and navigate to the file or area you would like to clone to 
+3. Type “git clone” then paste the link and press enter 
+4. Now open the file from wing or some other software capable of handling python 
+Need at minimum 3 computers and 2 Cozmos. You will always need to have one more computer than there are Cozmos. 
+Master (one computer that will “run” the game): 
+-Have a music file downloaded of what song you’d like to use and change the filename in this line:  
+pygame.mixer.music.load('The_Hampster_Dance.mp3') #211 seconds long 
+Based on the length of the song change 211 in this line: 
+startTime = random.randint(0, 211-waitTime) 
+to however long your song is in seconds 
+ 
+Other computers (have a Cozmo set up and attached): 
+  -Need pygame installed 
+ 1. type “pip install pygame” then hit enter for windows 
+     For a mac it may be pip3 
+-If you would like to see what each cozmo is seeing you need to install tkinter, numpy, and pillow you use the same 
+  technique for installing pygame but just replace the word pygame with tkinter, numpy, and pillow. 
+-If you would not like to see what cozmo sees you will need to comment out these lines: 
+ 1. import tkinter 
+ 2. import numpy 
+ 3. import PIL 
+And take out “,use_viewer=True,force_viewer_on_top=True” from the cozmo.run_program line 
+-If there is a problem saying that there is no device connected (like a phone) for apple download iTunes 
+-If the sdk needs to be updated for Windows type this statement into your command prompt: pip install –user –upgrade Cozmo 
+ 
+Acknowledgements and Gratitude: 
+Professor Szecsei- all of the time and help with the network and setup of Cozmo’s and laptops and helping me through 
+problems in my code 
+Trevor Lowry, Diana Southiphomma, Evan Raasch, and Chase Koschmeder- Through the work of our dance I was able to better
+understand the movements Cozmo is able to do as well as how networking works and what a good way to structure my code 
+for networking is. 
+Matt Dargan- Helped me get my feet wet in python coding as well as helping me update my sdk a couple times. 
+ 
+https://www.pygame.org/download.shtml 
+
+Youtube links to my videos:
+  https://www.youtube.com/watch?v=GVSc39Bhq30
+  https://www.youtube.com/watch?v=tAkCx_hYtPk
+ 
+ 
